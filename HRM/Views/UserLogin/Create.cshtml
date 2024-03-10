@@ -1,0 +1,51 @@
+﻿@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<!-- DataTales Example -->
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <a href="~/UserLogin/Index" class="btn btn-success">Back</a>
+    </div>
+    <div class="card-body">
+        <div class="col-lg-7">
+            <div class="p-5">
+                <div class="text-center">
+                    <h1 class="h4 text-gray-900 mb-4">Create User!</h1>
+                </div>
+                @using (Html.BeginForm("Create", "UserLogin", FormMethod.Post))
+                {
+                    <div class="form-group row">
+                        <div class="col-sm-6 mb-3 mb-sm-0">
+                            <input type="text" class="form-control form-control-user" name="UserName" id="UserName"
+                                   placeholder="UserName">
+                        </div>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control form-control-user" name="EmployeeId" id="EmployeeId"
+                                   placeholder="EmployeeId">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-sm-6 mb-3 mb-sm-0">
+                            <input type="password" class="form-control form-control-user"
+                                  name="Password" id="Password" placeholder="Password">
+                        </div>
+                        <div class="col-sm-6">
+                            <input type="password" class="form-control form-control-user"
+                                   name="RepeatPassword" id="RepeatPassword" placeholder="Repeat Password">
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" type="submit">Add User</button>
+                    <hr>
+                }
+
+                <hr>
+
+            </div>
+        </div>
+    </div>
+</div>
+

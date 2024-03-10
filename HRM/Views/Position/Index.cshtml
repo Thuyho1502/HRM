@@ -1,0 +1,55 @@
+﻿@model IEnumerable<HRM.Position>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <a href="~/Position/Create" class="btn btn-success">Add Position</a>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>PositionId</th>
+                        <th>PositionName</th>
+                        <th>IsActive</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+
+                            <td>@Html.DisplayFor(itemModel => item.PositionId)</td>
+                            <td>@Html.DisplayFor(itemModel => item.PositionName)</td>
+                            <td>
+                                @if (item.isActive == true)
+                                {
+                                    <a href="" onclick="return confirmLockPosition('@item.PositionId');">
+                                        <i class="fa fa-unlock" style="color:green"></i>
+                                    </a>
+
+                                }
+                                else if (item.isActive == false)
+                                {
+                                    <a href="" onclick="return confirmActivePosition('@item.PositionId');">
+                                        <i class="fa fa-lock" style="color:red"></i>
+                                    </a>
+                                }
+                            </td>
+
+                        </tr>
+
+                    }
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+

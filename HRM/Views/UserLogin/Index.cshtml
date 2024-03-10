@@ -1,0 +1,72 @@
+﻿@model IEnumerable<HRM.UserLogin>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+
+<!-- DataTales Example -->
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <a href="~/UserLogin/Create" class="btn btn-success">Add User</a>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>UserName</th>
+                        <th>EmployeeId</th>
+                        <th>Role</th>
+                        <th>StatusUser</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+
+                            <td>@Html.DisplayFor(itemModel => item.UserName)</td>
+                            <td>@Html.DisplayFor(itemModel => item.EmployeeId)</td>
+                            <td>
+                                @if (item.Role == 1)
+                                {
+                                    <span>Admin</span>
+                                }
+                                else if (item.Role == 0)
+                                {
+                                    <span>User</span>
+                                }
+
+                            </td>
+                            <td>
+                                @if (item.StatusUser == 1)
+                                {
+                                    <a href="" onclick="return confirmLockUser('@item.UserName');">
+                                        <i class="fa fa-unlock" style="color:green"></i>
+                                    </a>
+
+                                }
+                                else if (item.StatusUser == 0)
+                                {
+                                    <a href="" onclick="return confirmActiveUser('@item.UserName');">
+                                        <i class="fa fa-lock" style="color:red"></i>
+                                    </a>
+                                }
+                            </td>
+
+                        </tr>
+
+                    }
+
+
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+

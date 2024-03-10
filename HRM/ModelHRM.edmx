@@ -4,17 +4,17 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="HRMModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="HRMModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Attendance">
           <Key>
             <PropertyRef Name="EmployeeId" />
             <PropertyRef Name="DateWork" />
           </Key>
-          <Property Name="EmployeeId" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="EmployeeId" Type="int" Nullable="false" />
           <Property Name="DateWork" Type="datetime" Nullable="false" />
           <Property Name="TimeCheckIn" Type="datetime" />
           <Property Name="TimeCheckOut" Type="datetime" />
-          <Property Name="HourWork" Type="float" Nullable="false" />
+          <Property Name="HoursWork" Type="float" />
         </EntityType>
         <EntityType Name="Department">
           <Key>
@@ -22,8 +22,8 @@
           </Key>
           <Property Name="DepartmentId" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="DepartmentName" Type="nvarchar" MaxLength="50" />
-          <Property Name="IsActive" Type="bit" />
-          <Property Name="DateCreate" Type="datetime" />
+          <Property Name="isActive" Type="bit" />
+          <Property Name="DateCreated" Type="datetime" />
           <Property Name="UserCreate" Type="nvarchar" MaxLength="50" />
           <Property Name="DateLastUpdate" Type="datetime" />
           <Property Name="UserLastUpdate" Type="nvarchar" MaxLength="50" />
@@ -41,14 +41,14 @@
           <Property Name="Address" Type="nvarchar" MaxLength="250" />
           <Property Name="Phone" Type="nvarchar" MaxLength="50" />
           <Property Name="Email" Type="nvarchar" MaxLength="50" />
-          <Property Name="AddressTemp" Type="nvarchar" MaxLength="250" />
           <Property Name="DepartmentId" Type="nvarchar" MaxLength="50" />
+          <Property Name="PositionId" Type="nvarchar" MaxLength="50" />
           <Property Name="NationId" Type="nvarchar" MaxLength="50" />
           <Property Name="RegionId" Type="nvarchar" MaxLength="50" />
           <Property Name="StatusWorkId" Type="int" />
-          <Property Name="DateCreate" Type="datetime" />
+          <Property Name="DateCreated" Type="datetime" />
           <Property Name="UserCreate" Type="nvarchar" MaxLength="50" />
-          <Property Name="DateLastUpdate" Type="datetime" />
+          <Property Name="DateLastUpdate" Type="date" />
           <Property Name="UserLastUpdate" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Nation">
@@ -63,17 +63,17 @@
           <Property Name="LastDateUpdate" Type="datetime" />
           <Property Name="LastUserUpdate" Type="nvarchar" MaxLength="50" />
         </EntityType>
-        <EntityType Name="Postion">
+        <EntityType Name="Position">
           <Key>
-            <PropertyRef Name="PostionId" />
+            <PropertyRef Name="PositionId" />
           </Key>
-          <Property Name="PostionId" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="PostionName" Type="nvarchar" MaxLength="50" />
+          <Property Name="PositionId" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="PositionName" Type="nvarchar" MaxLength="50" />
           <Property Name="isActive" Type="bit" />
-          <Property Name="DateCreate" Type="datetime" />
+          <Property Name="DateCreated" Type="datetime" />
           <Property Name="UserCreate" Type="nvarchar" MaxLength="50" />
-          <Property Name="LastDateUpdate" Type="datetime" />
-          <Property Name="LastUserUpdate" Type="nvarchar" MaxLength="50" />
+          <Property Name="DateLastUpdate" Type="datetime" />
+          <Property Name="UserLastUpdate" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Region">
           <Key>
@@ -85,15 +85,15 @@
           <Property Name="DateCreate" Type="datetime" />
           <Property Name="UserCreate" Type="nvarchar" MaxLength="50" />
           <Property Name="LastDateUpdate" Type="datetime" />
-          <Property Name="LastDateCreate" Type="nvarchar" MaxLength="50" />
+          <Property Name="LastUserUpdate" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="UserLogin">
           <Key>
             <PropertyRef Name="UserName" />
           </Key>
+          <Property Name="EmployeeId" Type="nvarchar" MaxLength="50" />
           <Property Name="UserName" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Password" Type="nvarchar" MaxLength="50" />
-          <Property Name="EmployeeId" Type="nchar" MaxLength="10" />
           <Property Name="Role" Type="int" />
           <Property Name="StatusUser" Type="int" />
           <Property Name="DateCreate" Type="datetime" />
@@ -101,16 +101,33 @@
           <Property Name="DateLastUpdate" Type="datetime" />
           <Property Name="UserLastUpdate" Type="nvarchar" MaxLength="50" />
         </EntityType>
+        <Association Name="FK_DepartmentID">
+          <End Role="Department" Type="Self.Department" Multiplicity="0..1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="DepartmentId" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="DepartmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="HRMModelStoreContainer">
           <EntitySet Name="Attendance" EntityType="Self.Attendance" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Department" EntityType="Self.Department" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Nation" EntityType="Self.Nation" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Postion" EntityType="Self.Postion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Position" EntityType="Self.Position" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Region" EntityType="Self.Region" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserLogin" EntityType="Self.UserLogin" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_DepartmentID" Association="Self.FK_DepartmentID">
+            <End Role="Department" EntitySet="Department" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="HRMModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -119,11 +136,11 @@
             <PropertyRef Name="EmployeeId" />
             <PropertyRef Name="DateWork" />
           </Key>
-          <Property Name="EmployeeId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="EmployeeId" Type="Int32" Nullable="false" />
           <Property Name="DateWork" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="TimeCheckIn" Type="DateTime" Precision="3" />
           <Property Name="TimeCheckOut" Type="DateTime" Precision="3" />
-          <Property Name="HourWork" Type="Double" Nullable="false" />
+          <Property Name="HoursWork" Type="Double" />
         </EntityType>
         <EntityType Name="Department">
           <Key>
@@ -131,11 +148,12 @@
           </Key>
           <Property Name="DepartmentId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="DepartmentName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="IsActive" Type="Boolean" />
-          <Property Name="DateCreate" Type="DateTime" Precision="3" />
+          <Property Name="isActive" Type="Boolean" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" />
           <Property Name="UserCreate" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="DateLastUpdate" Type="DateTime" Precision="3" />
           <Property Name="UserLastUpdate" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Employees" Relationship="Self.FK_DepartmentID" FromRole="Department" ToRole="Employee" />
         </EntityType>
         <EntityType Name="Employee">
           <Key>
@@ -151,14 +169,15 @@
           <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="DepartmentId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PositionId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="NationId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="RegionId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="StatusWorkId" Type="Int32" />
-          <Property Name="DateCreate" Type="DateTime" Precision="3" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" />
           <Property Name="UserCreate" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="DateLastUpdate" Type="DateTime" Precision="3" />
+          <Property Name="DateLastUpdate" Type="DateTime" Precision="0" />
           <Property Name="UserLastUpdate" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="AddressTemp" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Department" Relationship="Self.FK_DepartmentID" FromRole="Employee" ToRole="Department" />
         </EntityType>
         <EntityType Name="Nation">
           <Key>
@@ -172,17 +191,17 @@
           <Property Name="LastDateUpdate" Type="DateTime" Precision="3" />
           <Property Name="LastUserUpdate" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
-        <EntityType Name="Postion">
+        <EntityType Name="Position">
           <Key>
-            <PropertyRef Name="PostionId" />
+            <PropertyRef Name="PositionId" />
           </Key>
-          <Property Name="PostionId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="PostionName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PositionId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PositionName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="isActive" Type="Boolean" />
-          <Property Name="DateCreate" Type="DateTime" Precision="3" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" />
           <Property Name="UserCreate" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="LastDateUpdate" Type="DateTime" Precision="3" />
-          <Property Name="LastUserUpdate" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DateLastUpdate" Type="DateTime" Precision="3" />
+          <Property Name="UserLastUpdate" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Region">
           <Key>
@@ -194,15 +213,15 @@
           <Property Name="DateCreate" Type="DateTime" Precision="3" />
           <Property Name="UserCreate" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="LastDateUpdate" Type="DateTime" Precision="3" />
-          <Property Name="LastDateCreate" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LastUserUpdate" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="UserLogin">
           <Key>
             <PropertyRef Name="UserName" />
           </Key>
+          <Property Name="EmployeeId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="EmployeeId" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
           <Property Name="Role" Type="Int32" />
           <Property Name="StatusUser" Type="Int32" />
           <Property Name="DateCreate" Type="DateTime" Precision="3" />
@@ -210,14 +229,30 @@
           <Property Name="DateLastUpdate" Type="DateTime" Precision="3" />
           <Property Name="UserLastUpdate" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
+        <Association Name="FK_DepartmentID">
+          <End Role="Department" Type="Self.Department" Multiplicity="0..1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="DepartmentId" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="DepartmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="HRMEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Attendances" EntityType="Self.Attendance" />
           <EntitySet Name="Departments" EntityType="Self.Department" />
           <EntitySet Name="Employees" EntityType="Self.Employee" />
           <EntitySet Name="Nations" EntityType="Self.Nation" />
-          <EntitySet Name="Postions" EntityType="Self.Postion" />
+          <EntitySet Name="Positions" EntityType="Self.Position" />
           <EntitySet Name="Regions" EntityType="Self.Region" />
           <EntitySet Name="UserLogins" EntityType="Self.UserLogin" />
+          <AssociationSet Name="FK_DepartmentID" Association="Self.FK_DepartmentID">
+            <End Role="Department" EntitySet="Departments" />
+            <End Role="Employee" EntitySet="Employees" />
+          </AssociationSet>
         </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
@@ -232,7 +267,7 @@
                 <ScalarProperty Name="DateWork" ColumnName="DateWork" />
                 <ScalarProperty Name="TimeCheckIn" ColumnName="TimeCheckIn" />
                 <ScalarProperty Name="TimeCheckOut" ColumnName="TimeCheckOut" />
-                <ScalarProperty Name="HourWork" ColumnName="HourWork" />
+                <ScalarProperty Name="HoursWork" ColumnName="HoursWork" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -241,8 +276,8 @@
               <MappingFragment StoreEntitySet="Department">
                 <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
                 <ScalarProperty Name="DepartmentName" ColumnName="DepartmentName" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="DateCreate" ColumnName="DateCreate" />
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
                 <ScalarProperty Name="UserCreate" ColumnName="UserCreate" />
                 <ScalarProperty Name="DateLastUpdate" ColumnName="DateLastUpdate" />
                 <ScalarProperty Name="UserLastUpdate" ColumnName="UserLastUpdate" />
@@ -252,7 +287,6 @@
           <EntitySetMapping Name="Employees">
             <EntityTypeMapping TypeName="HRMModel.Employee">
               <MappingFragment StoreEntitySet="Employee">
-                <ScalarProperty Name="AddressTemp" ColumnName="AddressTemp" />
                 <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
                 <ScalarProperty Name="FullName" ColumnName="FullName" />
                 <ScalarProperty Name="Gender" ColumnName="Gender" />
@@ -263,10 +297,11 @@
                 <ScalarProperty Name="Phone" ColumnName="Phone" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
+                <ScalarProperty Name="PositionId" ColumnName="PositionId" />
                 <ScalarProperty Name="NationId" ColumnName="NationId" />
                 <ScalarProperty Name="RegionId" ColumnName="RegionId" />
                 <ScalarProperty Name="StatusWorkId" ColumnName="StatusWorkId" />
-                <ScalarProperty Name="DateCreate" ColumnName="DateCreate" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
                 <ScalarProperty Name="UserCreate" ColumnName="UserCreate" />
                 <ScalarProperty Name="DateLastUpdate" ColumnName="DateLastUpdate" />
                 <ScalarProperty Name="UserLastUpdate" ColumnName="UserLastUpdate" />
@@ -286,16 +321,16 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Postions">
-            <EntityTypeMapping TypeName="HRMModel.Postion">
-              <MappingFragment StoreEntitySet="Postion">
-                <ScalarProperty Name="PostionId" ColumnName="PostionId" />
-                <ScalarProperty Name="PostionName" ColumnName="PostionName" />
+          <EntitySetMapping Name="Positions">
+            <EntityTypeMapping TypeName="HRMModel.Position">
+              <MappingFragment StoreEntitySet="Position">
+                <ScalarProperty Name="PositionId" ColumnName="PositionId" />
+                <ScalarProperty Name="PositionName" ColumnName="PositionName" />
                 <ScalarProperty Name="isActive" ColumnName="isActive" />
-                <ScalarProperty Name="DateCreate" ColumnName="DateCreate" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
                 <ScalarProperty Name="UserCreate" ColumnName="UserCreate" />
-                <ScalarProperty Name="LastDateUpdate" ColumnName="LastDateUpdate" />
-                <ScalarProperty Name="LastUserUpdate" ColumnName="LastUserUpdate" />
+                <ScalarProperty Name="DateLastUpdate" ColumnName="DateLastUpdate" />
+                <ScalarProperty Name="UserLastUpdate" ColumnName="UserLastUpdate" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -308,16 +343,16 @@
                 <ScalarProperty Name="DateCreate" ColumnName="DateCreate" />
                 <ScalarProperty Name="UserCreate" ColumnName="UserCreate" />
                 <ScalarProperty Name="LastDateUpdate" ColumnName="LastDateUpdate" />
-                <ScalarProperty Name="LastDateCreate" ColumnName="LastDateCreate" />
+                <ScalarProperty Name="LastUserUpdate" ColumnName="LastUserUpdate" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="UserLogins">
             <EntityTypeMapping TypeName="HRMModel.UserLogin">
               <MappingFragment StoreEntitySet="UserLogin">
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
-                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
                 <ScalarProperty Name="Role" ColumnName="Role" />
                 <ScalarProperty Name="StatusUser" ColumnName="StatusUser" />
                 <ScalarProperty Name="DateCreate" ColumnName="DateCreate" />

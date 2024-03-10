@@ -29,7 +29,7 @@ namespace HRM
         public virtual DbSet<Department> Departments { get; set; }
         public virtual DbSet<Employee> Employees { get; set; }
         public virtual DbSet<Nation> Nations { get; set; }
-        public virtual DbSet<Postion> Postions { get; set; }
+        public virtual DbSet<Position> Positions { get; set; }
         public virtual DbSet<Region> Regions { get; set; }
         public virtual DbSet<UserLogin> UserLogins { get; set; }
     }

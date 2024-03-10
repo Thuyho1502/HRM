@@ -14,10 +14,10 @@ namespace HRM
     
     public partial class Attendance
     {
-        public string EmployeeId { get; set; }
+        public int EmployeeId { get; set; }
         public System.DateTime DateWork { get; set; }
         public Nullable<System.DateTime> TimeCheckIn { get; set; }
         public Nullable<System.DateTime> TimeCheckOut { get; set; }
-        public double HourWork { get; set; }
+        public Nullable<double> HoursWork { get; set; }
     }
 }
