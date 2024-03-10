@@ -14,9 +14,9 @@ namespace HRM
     
     public partial class UserLogin
     {
+        public string EmployeeId { get; set; }
         public string UserName { get; set; }
         public string Password { get; set; }
-        public string EmployeeId { get; set; }
         public Nullable<int> Role { get; set; }
         public Nullable<int> StatusUser { get; set; }
         public Nullable<System.DateTime> DateCreate { get; set; }

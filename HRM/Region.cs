@@ -20,6 +20,6 @@ namespace HRM
         public Nullable<System.DateTime> DateCreate { get; set; }
         public string UserCreate { get; set; }
         public Nullable<System.DateTime> LastDateUpdate { get; set; }
-        public string LastDateCreate { get; set; }
+        public string LastUserUpdate { get; set; }
     }
 }

@@ -14,12 +14,21 @@ namespace HRM
     
     public partial class Department
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Department()
+        {
+            this.Employees = new HashSet<Employee>();
+        }
+    
         public string DepartmentId { get; set; }
         public string DepartmentName { get; set; }
-        public Nullable<bool> IsActive { get; set; }
-        public Nullable<System.DateTime> DateCreate { get; set; }
+        public Nullable<bool> isActive { get; set; }
+        public Nullable<System.DateTime> DateCreated { get; set; }
         public string UserCreate { get; set; }
         public Nullable<System.DateTime> DateLastUpdate { get; set; }
         public string UserLastUpdate { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Employee> Employees { get; set; }
     }
 }

@@ -12,14 +12,14 @@ namespace HRM
     using System;
     using System.Collections.Generic;
     
-    public partial class Postion
+    public partial class Position
     {
-        public string PostionId { get; set; }
-        public string PostionName { get; set; }
+        public string PositionId { get; set; }
+        public string PositionName { get; set; }
         public Nullable<bool> isActive { get; set; }
-        public Nullable<System.DateTime> DateCreate { get; set; }
+        public Nullable<System.DateTime> DateCreated { get; set; }
         public string UserCreate { get; set; }
-        public Nullable<System.DateTime> LastDateUpdate { get; set; }
-        public string LastUserUpdate { get; set; }
+        public Nullable<System.DateTime> DateLastUpdate { get; set; }
+        public string UserLastUpdate { get; set; }
     }
 }

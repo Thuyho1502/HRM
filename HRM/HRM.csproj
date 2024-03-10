@@ -132,7 +132,12 @@
     <Compile Include="Attendance.cs">
       <DependentUpon>ModelHRM.tt</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\DepartmentController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\NationController.cs" />
+    <Compile Include="Controllers\PositionController.cs" />
+    <Compile Include="Controllers\RegionController.cs" />
+    <Compile Include="Controllers\UserLoginController.cs" />
     <Compile Include="Department.cs">
       <DependentUpon>ModelHRM.tt</DependentUpon>
     </Compile>
@@ -157,10 +162,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ModelHRM.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\HashMd5.cs" />
     <Compile Include="Nation.cs">
       <DependentUpon>ModelHRM.tt</DependentUpon>
     </Compile>
-    <Compile Include="Postion.cs">
+    <Compile Include="Position.cs">
       <DependentUpon>ModelHRM.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -180,6 +186,11 @@
     <Content Include="Assets\img\undraw_profile_2.svg" />
     <Content Include="Assets\img\undraw_profile_3.svg" />
     <Content Include="Assets\img\undraw_rocket.svg" />
+    <Content Include="Assets\javascript\JsDepartment.js" />
+    <Content Include="Assets\javascript\JsNation.js" />
+    <Content Include="Assets\javascript\JsPosition.js" />
+    <Content Include="Assets\javascript\JsRegion.js" />
+    <Content Include="Assets\javascript\JsUserLogin.js" />
     <Content Include="Assets\js\demo\chart-area-demo.js" />
     <Content Include="Assets\js\demo\chart-bar-demo.js" />
     <Content Include="Assets\js\demo\chart-pie-demo.js" />
@@ -1891,13 +1902,6 @@
     <Content Include="Scripts\bootstrap.esm.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <EntityDeploy Include="ModelHRM.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>ModelHRM.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="ModelHRM.edmx.diagram">
-      <DependentUpon>ModelHRM.edmx</DependentUpon>
-    </Content>
     <Content Include="Assets\scss\navs\_global.scss" />
     <Content Include="Assets\scss\navs\_sidebar.scss" />
     <Content Include="Assets\scss\navs\_topbar.scss" />
@@ -2070,6 +2074,13 @@
     <Content Include="Assets\vendor\fontawesome-free\webfonts\fa-solid-900.woff2" />
     <Content Include="Assets\vendor\jquery\jquery.min.map" />
     <Content Include="Assets\vendor\jquery\jquery.slim.min.map" />
+    <EntityDeploy Include="ModelHRM.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ModelHRM.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="ModelHRM.edmx.diagram">
+      <DependentUpon>ModelHRM.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -2093,12 +2104,21 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Home\Dashboard.cshtml" />
     <Content Include="Views\Shared\_Navigation.cshtml" />
+    <Content Include="Views\UserLogin\Index.cshtml" />
+    <Content Include="Views\UserLogin\Create.cshtml" />
+    <Content Include="Views\Region\Index.cshtml" />
+    <Content Include="Views\Region\Create.cshtml" />
+    <Content Include="Views\Nation\Index.cshtml" />
+    <Content Include="Views\Nation\Create.cshtml" />
+    <Content Include="Views\Department\Index.cshtml" />
+    <Content Include="Views\Department\Create.cshtml" />
+    <Content Include="Views\Position\Index.cshtml" />
+    <Content Include="Views\Position\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />
@@ -2148,7 +2168,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>58255</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>https://localhost:44306/</IISUrl>
+          <IISUrl>http://localhost:44306/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

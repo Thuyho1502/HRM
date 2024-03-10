@@ -1,0 +1,47 @@
+﻿
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- DataTales Example -->
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <a href="~/Department/Index" class="btn btn-success">Back</a>
+    </div>
+    <div class="card-body">
+        <div class="col-lg-7">
+            <div class="p-5">
+                <div class="text-center">
+                    <h1 class="h4 text-gray-900 mb-4">Create Department!</h1>
+                </div>
+                @using (Html.BeginForm("Create", "Department", FormMethod.Post))
+                {
+                    <div class="form-group row">
+                        <div class="col-sm-6 mb-3 mb-sm-0">
+                            <input type="text" class="form-control form-control-user" name="DepartmentId" id="DepartmentId"
+                                   placeholder="DepartmentId">
+                        </div>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control form-control-user" name="DepartmentName" id="DepartmentName"
+                                   placeholder="DepartmentName">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-sm-6 mb-3 mb-sm-0">
+                            <input type="text" class="form-control form-control-user"
+                                   name="isActive" id="isActive" placeholder="isActive">
+                        </div>
+
+                    </div>
+                    <button class="btn btn-primary" type="submit">Add Department</button>
+                    <hr>
+                }
+
+                <hr>
+
+            </div>
+        </div>
+    </div>
+</div>
